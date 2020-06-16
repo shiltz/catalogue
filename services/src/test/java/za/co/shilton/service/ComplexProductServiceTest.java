@@ -37,9 +37,7 @@ class ComplexProductServiceTest extends TestConfiguration {
 
   @Test
   public void testCreateProduct() {
-    ProductDto productDto = new ProductDto();
-    productDto.setName("test");
-    Product product = complexProductService.createProduct(productDto);
+    Product product = complexProductService.createProduct(ProductDto.builder().name("test").build());
 
     verify(productRepository, times(1)).save(any(Product.class)); // most important
     assertNotNull(product);

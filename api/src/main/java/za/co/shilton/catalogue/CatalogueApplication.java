@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.bind.annotation.*;
 import za.co.shilton.dto.ProductDto;
+import za.co.shilton.entity.Product;
 import za.co.shilton.service.ProductService;
 
 import javax.sql.DataSource;
@@ -28,26 +29,12 @@ public class CatalogueApplication {
 		SpringApplication.run(CatalogueApplication.class, args);
 	}
 
-//	@Bean
-//	public DataSource dataSource() {
-//		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//
-//		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//		dataSource.setUsername("mysqluser");
-//		dataSource.setPassword("mysqlpass");
-//		dataSource.setUrl(
-//				"jdbc:mysql://localhost:3306/myDb?createDatabaseIfNotExist=true");
-//
-//		return dataSource;
-//	}
-
-
 	@RestController
 	@RequestMapping("/api/product")
 	public class ProductController {
 
 		@Autowired
-		@Qualifier("sps")
+		@Qualifier("complex")
 		private ProductService productService;
 
 		@GetMapping
@@ -56,10 +43,10 @@ public class CatalogueApplication {
 		}
 
 
-		@PostMapping
+		@PostMapping(produces = "application/json")
 		public ResponseEntity createProduct() {
-			productService.createProduct(null);
-			return ResponseEntity.accepted().build();
+			Product product = productService.createProduct(ProductDto.builder().name("haibo").build());
+			return ResponseEntity.ok(String.format("{name: '%s'}", product.getName()));
 		}
 
 	}

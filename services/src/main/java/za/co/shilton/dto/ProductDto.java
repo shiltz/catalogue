@@ -1,5 +1,8 @@
 package za.co.shilton.dto;
 
+import lombok.Builder;
+
+@Builder
 public class ProductDto {
 
     private String name;

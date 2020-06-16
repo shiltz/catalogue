@@ -8,16 +8,15 @@ import za.co.shilton.entity.Product;
 @Service("sps")
 public class StandardProductService implements ProductService {
 
-  @Override
   public Product createProduct(ProductDto product) {
     Product product1 = new Product();
-    product1.setName("Shilo Prod");
+    product1.setName(product.getName());
     return product1;
   }
 
   @Override
   public List<ProductDto> getProducts() {
-    return List.of(new ProductDto());
+    return List.of(ProductDto.builder().name("asd").build());
   }
 
   public int doSomethingSimple(int a, int b) {
